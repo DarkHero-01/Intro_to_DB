@@ -2,11 +2,13 @@ import mysql.connector
 from mysql.connector import Error
 
 def create_database():
+    connection = None
+    cursor = None
     try:
         connection = mysql.connector.connect(
             host="localhost",
             user="root",
-            password=""
+            password="" 
         )
 
         if connection.is_connected():
@@ -16,12 +18,13 @@ def create_database():
 
             print("Database 'alx_book_store' created successfully!")
 
-    except Error as e:
+    except mysql.connector.Error as e:
         print(f"Error: {e}")
 
     finally:
-        if connection.is_connected():
+        if cursor:
             cursor.close()
+        if connection and connection.is_connected():
             connection.close()
             print("MySQL connection is closed.")
 
